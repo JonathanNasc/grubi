@@ -1,0 +1,31 @@
+{
+  "name": "grubi",
+  "version": "0.0.1",
+  "description": "A TypeScript ORM for mysql",
+  "repository": {
+    "type": "git"
+  },
+  "author": "Jonathan Nascimento",
+  "license": "MIT",
+  "scripts": {
+    "start": "npm run build && npm run watch",
+    "build": "tsc",
+    "serve": "nodemon dist/index.js",
+    "migrate-up": "node migration.js up",
+    "migrate-down": "node migration.js down",
+    "migrate-refresh": "node migration.js refresh",
+    "migrate-add": "node migration.js add migration",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"tsc -w\" \"npm run serve\"",
+    "build-ts": "tsc",
+    "debug": "npm run build && npm run watch-debug",
+    "serve-debug": "nodemon --inspect dist/index.js",
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"tsc -w\" \"npm run serve-debug\""
+  },
+  "dependencies": {
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {
+    "@types/mysql": "^2.15.2",
+    "typescript": "^2.4.0"
+  }
+}
