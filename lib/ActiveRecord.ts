@@ -57,6 +57,15 @@ export abstract class ActiveRecord {
         return records && records.length > 0 ? records[0] : null;
     }
 
+    protected async delete(): Promise<void> {
+        let query = `DELETE FROM ${this.mapper.table} WHERE id = ?`;
+        try {
+            return await Grubi.execute(query, [this.getId()]);
+        } catch (error) {
+            throw error;
+        }
+    }
+
     private async insert(): Promise<void> {
         let query = `INSERT INTO ${this.mapper.table} SET ?`;
         let params: any = this.getSetOfFields();
