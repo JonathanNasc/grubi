@@ -1,6 +1,6 @@
 import { createConnection, Connection, Query } from 'mysql';
 
-export class DB {
+export class Grubi {
 
     private static connection: Connection;
     
@@ -10,21 +10,21 @@ export class DB {
             db.connect((error) => {
                 if (error) return reject(error);
                 
-                DB.connection = db;
+                Grubi.connection = db;
                 return resolve(db);
             });
         });       
     }
 
     public static async execute(query: String, params?: Array<any>): Promise<any> {
-        if (!DB.connection) {
+        if (!Grubi.connection) {
             throw new Error("The connection was not initialized");
         }
 
         return new Promise((resolve, reject) => {
             let sql = <Query> {sql: query, values: params};
 
-            DB.connection.query(sql, (error, results, fields) => {
+            Grubi.connection.query(sql, (error, results, fields) => {
                 if (error) return reject(error);
 
                 return resolve(results);
