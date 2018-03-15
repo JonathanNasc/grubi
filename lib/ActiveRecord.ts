@@ -1,5 +1,5 @@
 import { EntityMapper } from './EntityMapper';
-import { DB } from './DB';
+import { Grubi } from './Grubi';
 
 export abstract class ActiveRecord {
 
@@ -35,7 +35,7 @@ export abstract class ActiveRecord {
 
     protected static async select(mapper: EntityMapper, sql: string, params: any[]): Promise<any[]> {
         try {
-            let results = await DB.execute(sql, params);
+            let results = await Grubi.execute(sql, params);
             let records: ActiveRecord[] = [];
             for (let resultSet of results) {
                 records.push(ActiveRecord.resultSetToObject(mapper, resultSet));
@@ -61,7 +61,7 @@ export abstract class ActiveRecord {
         let query = `INSERT INTO ${this.mapper.table} SET ?`;
         let params: any = this.getSetOfFields();
         try {
-            let result = await DB.execute(query, params);
+            let result = await Grubi.execute(query, params);
             this.id = result.insertId;
         } catch (error) {
             throw error;
@@ -73,7 +73,7 @@ export abstract class ActiveRecord {
         let params: Array<any> = this.getValues();
         params.push(this.getId());
         try {
-            return await DB.execute(query, params);
+            return await Grubi.execute(query, params);
         } catch (error) {
             throw error;
         }
